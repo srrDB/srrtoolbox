@@ -1,4 +1,4 @@
-# srrtoolbox
+# 🧰 srrtoolbox
 
 This is WIP and will be a mix of tools and things that can be used with srr-files and srrdb.com.
 
