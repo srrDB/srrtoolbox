@@ -1,0 +1,56 @@
+name: Release pipeline
+
+on:
+  push:
+    tags:        
+      - v*
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+    strategy:
+      matrix:
+        dotnet-version: [ '7.0.x' ]
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: ${{ matrix.dotnet-version }}
+    - name: Extract version number
+      id: tag
+      uses: actions/github-script@0.2.0
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        script: |
+          return context.payload.ref.replace(/refs\/tags\/v/, '');
+    - name: Restore dependencies
+      run: dotnet restore
+      working-directory: src/srrtoolbox
+    - name: Build
+      run: dotnet build --no-restore
+      working-directory: src/srrtoolbox
+    - name: Publish
+      run: dotnet publish src/srrtoolbox/srrtoolbox.csproj --configuration Release --output Release --nologo --runtime win-x64 --property:PublishSingleFile=true --property:Version=${{ steps.tag.outputs.result }} --property:PublishTrimmed=true --self-contained true
+    - name: Create release
+      uses: actions/create-release@v1
+      id: create_release
+      with:
+        draft: true
+        prerelease: false
+        release_name: ${{ github.ref }}
+        tag_name: ${{ github.ref }}
+        body_path: CHANGELOG.md
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: Add artifact to release
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./Release/srrtoolbox.exe
+        asset_name: srrtoolbox.exe
+        asset_content_type: application/x-msdownload

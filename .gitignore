@@ -1,0 +1,9 @@
+*.user
+.vs/
+src/srrtoolbox/bin/*
+src/srrtoolbox/obj/*
+src/srrtoolbox/Properties/PublishProfiles/*
+
+#other files
+*.orig
+*.bak
