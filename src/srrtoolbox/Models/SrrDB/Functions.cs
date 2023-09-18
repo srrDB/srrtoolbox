@@ -1,4 +1,9 @@
-﻿namespace srrtoolbox.Models.SrrDB
+﻿using System;
+using System.IO;
+using System.Net.Http;
+using System.Threading.Tasks;
+
+namespace srrtoolbox.Models.SrrDB
 {
     public class Functions
     {
@@ -30,7 +35,7 @@
         {
             HttpClient client = new HttpClient
             {
-                BaseAddress = new("https://www.srrdb.com")
+                BaseAddress = new Uri("https://www.srrdb.com")
             };
 
             using (HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, "/release/add/" + release))

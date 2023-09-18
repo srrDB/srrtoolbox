@@ -8,7 +8,7 @@
     <SelfContained>true</SelfContained>
     <ImplicitUsings>enable</ImplicitUsings>
     <PlatformTarget>x64</PlatformTarget>
-    <Nullable>enable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
 
     <Company>srrDB</Company>
     <Copyright>srrDB</Copyright>
