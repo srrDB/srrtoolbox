@@ -33,7 +33,7 @@ jobs:
       run: dotnet build --no-restore
       working-directory: src/srrtoolbox
     - name: Publish
-      run: dotnet publish src/srrtoolbox/srrtoolbox.csproj --configuration Release --output Release --nologo --runtime win-x64 --property:PublishSingleFile=true --property:Version=${{ steps.tag.outputs.result }} --property:PublishTrimmed=true --self-contained true
+      run: dotnet publish src/srrtoolbox/srrtoolbox.csproj --configuration Release --output Release --nologo --runtime win-x64 --property:PublishSingleFile=true --property:Version=${{ steps.tag.outputs.result }} --self-contained true
     - name: Create release
       uses: actions/create-release@v1
       id: create_release
