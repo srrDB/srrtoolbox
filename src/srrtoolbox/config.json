@@ -2,6 +2,11 @@
   "Configuration": {
     "AirDCExport": {
       "Format": "RawTxt"
+    },
+    "SrrDb": {
+      "CookieAuth": "",
+      "DumpFile": "releaselist.txt",
+      "ListDumpUrl": "https://www.srrdb.com/open/releaselist"
     }
   }
 }

@@ -3,7 +3,7 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <RuntimeIdentifier>win-x64</RuntimeIdentifier>
-    <TargetFramework>net7.0</TargetFramework>
+    <TargetFrameworks>net7.0;net48;netstandard2.1</TargetFrameworks>
     <PublishSingleFile>true</PublishSingleFile>
     <SelfContained>true</SelfContained>
     <ImplicitUsings>enable</ImplicitUsings>
@@ -22,6 +22,10 @@
     <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="7.0.4" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="7.0.0" />
     <PackageReference Include="SharpZipLib" Version="1.4.2" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net48' ">
+    <Reference Include="System.Net.Http" />
   </ItemGroup>
 
   <ItemGroup>

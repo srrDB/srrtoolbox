@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Reflection;
@@ -13,9 +14,10 @@ namespace srrtoolbox
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             Configuration configuration = ConfigurationRoot.GetConfiguration("config.json");
+            bool commandRan = false;
 
             //file list regex
             Regex regex = new Regex(@"(\w\.\w{1,40}\.xml(\.bz2)?)");
@@ -29,10 +31,10 @@ namespace srrtoolbox
                 {
                     ExportFormat exportFormat = (ExportFormat)Enum.Parse(typeof(ExportFormat), configuration.AirDCExport.Format);
 
-                    string? path = Path.GetDirectoryName(arg) + Path.DirectorySeparatorChar;
-                    string? fileName = Path.GetFileName(arg);
+                    string path = Path.GetDirectoryName(arg) + Path.DirectorySeparatorChar;
+                    string fileName = Path.GetFileName(arg);
 
-                    List<FileListing>? fll = Functions.ProcessFileList(arg);
+                    List<FileListing> fll = Functions.ProcessFileList(arg);
                     List<ShareDirectory> ReleaseList = Functions.ProcessDcFileList(fll);
 
                     if (exportFormat == ExportFormat.RawTxt)
@@ -62,15 +64,20 @@ namespace srrtoolbox
                         File.WriteAllText(extractedDataPath, jsonString);
                     }
 
-                    return;
+                    commandRan = true;
                 }
             }
 
             //print info
-            Version? version = Assembly.GetEntryAssembly()?.GetName().Version;
+            if (!commandRan)
+            {
+                Version version = Assembly.GetEntryAssembly()?.GetName().Version;
 
-            Console.WriteLine("Usage: srrtoolbox [input file]");
-            Console.WriteLine("Version: " + version);
+                Console.WriteLine("Usage: srrtoolbox [input file]");
+                Console.WriteLine("Version: " + version);
+            }
+
+            return;
         }
     }
 }

@@ -17,7 +17,7 @@ namespace srrtoolbox.Models
             //settings
             if (File.Exists(configFile))
             {
-                IConfigurationBuilder? builder = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile(configFile, optional: false);
+                IConfigurationBuilder builder = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile(configFile, optional: false);
                 IConfiguration config;
 
                 try
@@ -65,6 +65,17 @@ namespace srrtoolbox.Models
     public class Configuration
     {
         public AirDCExport AirDCExport { get; set; } = new AirDCExport();
+
+        public SrrDb SrrDb { get; set; } = new SrrDb();
+    }
+
+    public class SrrDb
+    {
+        public string CookieAuth { get; set; } = ""; //id,hash
+
+        public string DumpFile { get; set; } = "releaselist.txt";
+
+        public string ListDumpUrl { get; set; } = "https://www.srrdb.com/open/releaselist";
     }
 
     public class AirDCExport

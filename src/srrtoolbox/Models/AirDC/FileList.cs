@@ -9,13 +9,13 @@ namespace srrtoolbox.Models.AirDC
     public class ShareFile
     {
         [XmlAttribute(AttributeName = "Name")]
-        public string? Name { get; set; }
+        public string Name { get; set; }
 
         [XmlAttribute(AttributeName = "Size")]
         public long Size { get; set; }
 
         [XmlAttribute(AttributeName = "TTH")]
-        public string? TTH { get; set; }
+        public string TTH { get; set; }
 
         public override string ToString()
         {
@@ -31,7 +31,7 @@ namespace srrtoolbox.Models.AirDC
         public List<ShareFile> File_ { get; set; } //Files?
 
         [XmlAttribute(AttributeName = "Name")]
-        public string? Name { get; set; }
+        public string Name { get; set; }
 
         [XmlAttribute(AttributeName = "Date")]
         public long Date { get; set; }
@@ -109,10 +109,10 @@ namespace srrtoolbox.Models.AirDC
         public int Version { get; set; }
 
         [XmlAttribute(AttributeName = "CID")]
-        public string? CID { get; set; }
+        public string CID { get; set; }
 
         [XmlAttribute(AttributeName = "Base")]
-        public string? Base { get; set; }
+        public string Base { get; set; }
 
         [XmlAttribute(AttributeName = "BaseDate")]
         public long BaseDate { get; set; }
@@ -137,6 +137,6 @@ namespace srrtoolbox.Models.AirDC
         }
 
         [XmlAttribute(AttributeName = "Generator")]
-        public string? Generator { get; set; }
+        public string Generator { get; set; }
     }
 }

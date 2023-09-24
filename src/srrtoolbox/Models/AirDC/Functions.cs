@@ -31,10 +31,10 @@ namespace srrtoolbox.Models.AirDC
             return releases;
         }
 
-        private static FileListing? ProcessFileListXml(string filename)
+        private static FileListing ProcessFileListXml(string filename)
         {
             FileInfo fileInfo = new FileInfo(filename);
-            FileListing? fileListing = null;
+            FileListing fileListing = null;
 
             using (FileStream source = fileInfo.OpenRead())
             {
@@ -61,7 +61,7 @@ namespace srrtoolbox.Models.AirDC
                     Console.WriteLine("Deserializing xml...");
                     using (XmlReader reader = XmlReader.Create(target))
                     {
-                        fileListing = (FileListing?)serializer.Deserialize(reader);
+                        fileListing = (FileListing)serializer.Deserialize(reader);
                     }
                 }
             }
@@ -71,11 +71,11 @@ namespace srrtoolbox.Models.AirDC
 
         public static List<FileListing> ProcessFileList(string[] filenames)
         {
-            List<FileListing>? fll = new List<FileListing>();
+            List<FileListing> fll = new List<FileListing>();
 
             foreach (string filename in filenames)
             {
-                FileListing? processed = ProcessFileListXml(filename);
+                FileListing processed = ProcessFileListXml(filename);
 
                 if (processed != null)
                 {
@@ -177,7 +177,7 @@ namespace srrtoolbox.Models.AirDC
                     Console.WriteLine("Deserializing xml...");
                     using (XmlReader reader = XmlReader.Create(target))
                     {
-                        asr = (AutoSearchRoot?)serializer.Deserialize(reader);
+                        asr = (AutoSearchRoot)serializer.Deserialize(reader);
                     }
                 }
             }

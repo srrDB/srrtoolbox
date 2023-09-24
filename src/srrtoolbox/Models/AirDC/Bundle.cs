@@ -7,13 +7,13 @@ namespace srrtoolbox.Models.AirDC
     public class Source
     {
         [XmlAttribute(AttributeName = "CID")]
-        public string? CID { get; set; }
+        public string CID { get; set; }
 
         [XmlAttribute(AttributeName = "Nick")]
-        public string? Nick { get; set; }
+        public string Nick { get; set; }
 
         [XmlAttribute(AttributeName = "HubHint")]
-        public string? HubHint { get; set; }
+        public string HubHint { get; set; }
     }
 
     [XmlRoot(ElementName = "Finished")]
@@ -21,7 +21,7 @@ namespace srrtoolbox.Models.AirDC
     {
 
         [XmlAttribute(AttributeName = "Target")]
-        public string? Target { get; set; }
+        public string Target { get; set; }
 
         [XmlAttribute(AttributeName = "Size")]
         public int Size { get; set; }
@@ -30,20 +30,20 @@ namespace srrtoolbox.Models.AirDC
         public int Added { get; set; }
 
         [XmlAttribute(AttributeName = "TTH")]
-        public string? TTH { get; set; }
+        public string TTH { get; set; }
 
         [XmlAttribute(AttributeName = "TimeFinished")]
         public int TimeFinished { get; set; }
 
         [XmlAttribute(AttributeName = "LastSource")]
-        public string? LastSource { get; set; }
+        public string LastSource { get; set; }
     }
 
     [XmlRoot(ElementName = "File")]
     public class FileBundle
     {
         [XmlElement(ElementName = "Finished")]
-        public Finished? Finished { get; set; }
+        public Finished Finished { get; set; }
 
         [XmlAttribute(AttributeName = "Version")]
         public int Version { get; set; }
@@ -66,7 +66,7 @@ namespace srrtoolbox.Models.AirDC
         public List<Source> Source { get; set; }
 
         [XmlAttribute(AttributeName = "Target")]
-        public string? Target { get; set; }
+        public string Target { get; set; }
 
         [XmlAttribute(AttributeName = "Size")]
         public long Size { get; set; }
@@ -75,7 +75,7 @@ namespace srrtoolbox.Models.AirDC
         public int Added { get; set; }
 
         [XmlAttribute(AttributeName = "TTH")]
-        public string? TTH { get; set; }
+        public string TTH { get; set; }
 
         [XmlAttribute(AttributeName = "Priority")]
         public int Priority { get; set; }
@@ -97,10 +97,10 @@ namespace srrtoolbox.Models.AirDC
         public int Version { get; set; }
 
         [XmlAttribute(AttributeName = "Target")]
-        public string? Target { get; set; }
+        public string Target { get; set; }
 
         [XmlAttribute(AttributeName = "Token")]
-        public string? Token { get; set; }
+        public string Token { get; set; }
 
         [XmlAttribute(AttributeName = "Added")]
         public int Added { get; set; }
