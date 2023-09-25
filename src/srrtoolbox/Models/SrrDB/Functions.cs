@@ -1,5 +1,7 @@
-﻿using System;
+﻿using srrtoolbox.Extensions;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Net;
 using System.Net.Http;
@@ -49,17 +51,33 @@ namespace srrtoolbox.Models.SrrDB
                 Timeout = TimeSpan.FromMinutes(60)
             };
 
+            long MBdl = 0;
+
+            IProgress<long> progress = new Progress<long>(value =>
+            {
+                double mbCalc = (int)value / 1000000;
+                double mbReached = Math.Floor(mbCalc);
+
+                if (mbReached > MBdl)
+                {
+                    MBdl = (int)mbReached;
+
+                    Console.WriteLine("Downloaded " + MBdl.ToString() + " MB");
+                }
+            });
+
             using (HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, uri.LocalPath))
             {
                 using (FileStream fs = new FileStream(filename, FileMode.Create, FileAccess.Write, FileShare.None))
                 {
                     request.Headers.Add("Cookie", "uid=" + uid.ToString() + "; hash=" + uhash); //cookie auth
 
-                    HttpResponseMessage httpResponseMessage = await client.SendAsync(request);
+                    HttpResponseMessage httpResponseMessage = await client.SendAsync(request, HttpCompletionOption.ResponseHeadersRead);
 
                     using (Stream download = await httpResponseMessage.Content.ReadAsStreamAsync())
                     {
-                        await download.CopyToAsync(fs, 81920); //write to file
+                        //await download.CopyToAsync(fs, 81920); //write to file
+                        await download.CopyToAsyncWithProgress(fs, progress, default(CancellationToken), 81920); //write to file
                     }
 
                     return true;

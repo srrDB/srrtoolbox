@@ -76,6 +76,30 @@ namespace srrtoolbox.Models
         public string DumpFile { get; set; } = "releaselist.txt";
 
         public string ListDumpUrl { get; set; } = "https://www.srrdb.com/open/releaselist";
+
+        //TODO: check common names if they also have ever had a scene release
+        public string[] KnownP2PGroups { get; set; } = new string[]
+        {
+            "CDB",
+            "Danishbits",
+            "DAWGS",
+            "DBRETAiL",
+            "EGEN",
+            "FiLMKiDS",
+            "GRANiTEN",
+            "GRANiTEN",
+            "HTR",
+            "JFF",
+            "PANDEMONiUM",
+            "PE2PE",
+            "PTNK",
+            "QUARK",
+            "RAPiDCOWS",
+            "ROCKETRACCOON",
+            "TWA",
+            "TWASERiES",
+            "YOLO"
+        };
     }
 
     public class AirDCExport

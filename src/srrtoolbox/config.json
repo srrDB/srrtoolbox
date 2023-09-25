@@ -6,7 +6,28 @@
     "SrrDb": {
       "CookieAuth": "",
       "DumpFile": "releaselist.txt",
-      "ListDumpUrl": "https://www.srrdb.com/open/releaselist"
+      "ListDumpUrl": "https://www.srrdb.com/open/releaselist",
+      "KnownP2PGroups": [
+        "CDB",
+        "Danishbits",
+        "DAWGS",
+        "DBRETAiL",
+        "EGEN",
+        "FiLMKiDS",
+        "GRANiTEN",
+        "GRANiTEN",
+        "HTR",
+        "JFF",
+        "PANDEMONiUM",
+        "PE2PE",
+        "PTNK",
+        "QUARK",
+        "RAPiDCOWS",
+        "ROCKETRACCOON",
+        "TWA",
+        "TWASERiES",
+        "YOLO"
+      ]
     }
   }
 }
