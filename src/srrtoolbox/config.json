@@ -4,28 +4,45 @@
       "Format": "RawTxt"
     },
     "SrrDb": {
-      "CookieAuth": "",
+      "Auth": {
+        "Cookie": {
+          "uid": 0,
+          "hash": ""
+        },
+        "Login": {
+          "Username": "",
+          "Password": ""
+        }
+      },
       "DumpFile": "releaselist.txt",
-      "ListDumpUrl": "https://www.srrdb.com/open/releaselist",
+      "DumpListUrl": "https://www.srrdb.com/open/releaselist",
+      "DumpGrabbedAt": "2020-01-01T00:00:00",
       "KnownP2PGroups": [
         "CDB",
         "Danishbits",
         "DAWGS",
         "DBRETAiL",
         "EGEN",
+        "ESiR",
         "FiLMKiDS",
         "GRANiTEN",
         "GRANiTEN",
+        "HDChina",
         "HTR",
         "JFF",
+        "KraBBA",
+        "m0nkrus",
+        "P2P",
         "PANDEMONiUM",
         "PE2PE",
         "PTNK",
         "QUARK",
         "RAPiDCOWS",
         "ROCKETRACCOON",
+        "RTBYTES",
         "TWA",
         "TWASERiES",
+        "WiKi",
         "YOLO"
       ]
     }

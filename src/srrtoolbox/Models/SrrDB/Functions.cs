@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading;
@@ -36,6 +37,52 @@ namespace srrtoolbox.Models.SrrDB
             return true;
         }
 
+        public static async Task<CookieConfig> Login(string username, string password)
+        {
+            string url = "https://www.srrdb.com/";
+
+            Uri uri = new Uri(url);
+            Uri baseAddress = new Uri(uri.Scheme + "://" + uri.Host); //ugly?
+
+            CookieContainer cookies = new CookieContainer();
+            HttpClientHandler handler = new HttpClientHandler();
+            handler.CookieContainer = cookies;
+
+
+            HttpClient client = new HttpClient(handler)
+            {
+                BaseAddress = baseAddress,
+                Timeout = TimeSpan.FromMinutes(60)
+            };
+
+            using (HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, "/account/login"))
+            {
+                FormUrlEncodedContent content = new FormUrlEncodedContent(new[]
+                {
+                    new KeyValuePair<string, string>("username", username),
+                    new KeyValuePair<string, string>("password", password),
+                    new KeyValuePair<string, string>("login", "Login")
+                });
+
+                HttpResponseMessage httpResponseMessage = await client.PostAsync("/account/login", content);
+
+                IEnumerable<Cookie> responseCookies = cookies.GetCookies(uri).Cast<Cookie>();
+
+                //found cookies
+                if (responseCookies.Count(x => x.Name == "uid" || x.Name == "hash") >= 2)
+                {
+                    CookieConfig cc = new CookieConfig();
+
+                    cc.uid = Convert.ToInt32(responseCookies.FirstOrDefault(x => x.Name == "uid").Value);
+                    cc.hash = responseCookies.FirstOrDefault(x => x.Name == "hash").Value;
+
+                    return cc;
+                }
+            }
+
+            return null;
+        }
+
         public static async Task<bool> DownloadSrrdbDump(string url, string filename, int uid, string uhash)
         {
             Uri uri = new Uri(url);
@@ -52,6 +99,7 @@ namespace srrtoolbox.Models.SrrDB
             };
 
             long MBdl = 0;
+            //TODO: calculate estimate left, check average length of the current records and use that to calculate
 
             IProgress<long> progress = new Progress<long>(value =>
             {

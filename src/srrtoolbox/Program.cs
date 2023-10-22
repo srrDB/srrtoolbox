@@ -16,8 +16,45 @@ namespace srrtoolbox
     {
         public static async Task Main(string[] args)
         {
-            Configuration configuration = ConfigurationRoot.GetConfiguration("config.json");
+            string configFile = "config.json";
+
+            Configuration configuration = ConfigurationRoot.GetConfiguration(configFile);
             bool commandRan = false;
+
+            //login to srrdb to get credentials cookie
+            //TODO: check validity of the credentials
+            if (string.IsNullOrEmpty(configuration.SrrDb.Auth.Cookie.hash))
+            {
+                //need to login
+                CookieConfig cc = await Models.SrrDB.Functions.Login(configuration.SrrDb.Auth.Login.Username, configuration.SrrDb.Auth.Login.Password);
+
+                //save cookie auth
+                configuration.SrrDb.Auth.Cookie = cc;
+                ConfigurationRoot.WriteConfig(configFile, configuration);
+            }
+
+            //download the latest dump if needed
+            if (configuration.SrrDb.DumpGrabbedAt < DateTime.Now.AddDays(-7))
+            {
+                /*string downloadPath = "";
+
+                //download new file
+                if(!Path.IsPathRooted(configuration.SrrDb.DumpFile))
+                {
+                    downloadPath += Directory.GetCurrentDirectory() + Path.DirectorySeparatorChar;
+                }
+
+                downloadPath += configuration.SrrDb.DumpFile;*/
+
+                await Models.SrrDB.Functions.DownloadSrrdbDump(configuration.SrrDb.DumpListUrl, configuration.SrrDb.DumpFile, configuration.SrrDb.Auth.Cookie.uid, configuration.SrrDb.Auth.Cookie.hash);
+
+                //save new date
+                configuration.SrrDb.DumpGrabbedAt = DateTime.Now;
+                ConfigurationRoot.WriteConfig(configFile, configuration);
+            }
+
+            //read all releases from srrdb into memory, ~1.4 GB RAM usage
+            string[] releases = File.ReadAllLines(configuration.SrrDb.DumpFile);
 
             //file list regex
             Regex regex = new Regex(@"(\w\.\w{1,40}\.xml(\.bz2)?)");
@@ -26,7 +63,7 @@ namespace srrtoolbox
             {
                 Match fileListMatch = regex.Match(arg);
 
-                //reading and exporting data from a file list
+                //parsing and exporting data from file lists
                 if (fileListMatch.Success)
                 {
                     ExportFormat exportFormat = (ExportFormat)Enum.Parse(typeof(ExportFormat), configuration.AirDCExport.Format);
@@ -57,7 +94,6 @@ namespace srrtoolbox
                         string extractedDataPath = path + fileName + ".json";
 
                         //TODO: make the json prettier: skip subdirs etc.
-
                         string jsonString = JsonSerializer.Serialize(ReleaseList,
                             new JsonSerializerOptions { WriteIndented = true });
 

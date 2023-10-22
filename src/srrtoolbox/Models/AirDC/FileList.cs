@@ -47,8 +47,6 @@ namespace srrtoolbox.Models.AirDC
             }
         }
 
-        //TODO: detect p2p groups from configuration etc. (TWA,PANDEMONiUM,EGEN,DAWGS,RAPiDCOWS,RTBYTES,P2P,HDChina,KraBBA,WiKi,ESiR,KraBBA,m0nkrus,PTNK)
-
         public bool IsRelease
         {
             get
